@@ -25,26 +25,26 @@ export const getStaticPaths = async () => {
   };
 };
 
-if (!items.length) {
-  return {
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
-  };
-}
-
-export const getStaticProps = async ({ params }) => {
+export async function getStaticProps({ params }) {
   const { items } = await client.getEntries({
     content_type: "recipe",
     "fields.slug": params.slug,
   });
 
+  if (!items.length) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: { recipe: items[0] },
     revalidate: 1,
   };
-};
+}
 
 export default function RecipeDetails({ recipe }) {
   if (!recipe) return <Skeleton />;
