@@ -24,6 +24,7 @@ export default function RecipeCard({ recipe }) {
           </Link>
         </div>
       </div>
+
       <style jsx>{`
         .card {
           transform: rotateZ(-1deg);
